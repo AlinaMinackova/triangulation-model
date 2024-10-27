@@ -20,8 +20,7 @@ public class Main {
         String fileContent = Files.readString(fileName);
 
         System.out.println("Loading model ...");
-        Model model = ObjReader.read(fileContent);
-        ModelTriangulation modelTriangulation = new ModelTriangulation(model);
+        ModelTriangulation modelTriangulation = new ModelTriangulation(ObjReader.read(fileContent));
         ObjWriter.write(modelTriangulation);
     }
 }

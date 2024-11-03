@@ -8,37 +8,43 @@ import java.util.List;
 
 public class Triangulation {
 
-    public static List<Polygon> triangulation(List<Polygon> polygons) {
-        List<Polygon> polygonsTriangulation = new ArrayList<>();
-        Polygon polygonNew;
-        for (Polygon polygon : polygons) {
-            for (int shift = 1; shift < polygon.getVertexIndices().size() - 1; shift++) {
-                polygonNew = new Polygon();
-                ArrayList<Integer> vertexIndices = new ArrayList<>(Arrays.asList(
-                        polygon.getVertexIndices().get(0),
-                        polygon.getVertexIndices().get(shift),
-                        polygon.getVertexIndices().get(shift + 1)
-                ));
-                polygonNew.setVertexIndices(vertexIndices);
+    public static List<Polygon> triangulate(List<Polygon> polygons) {
+        int vertexCount = 0;
+        for (Polygon polygon: polygons){
+            vertexCount += polygon.getVertexIndices().size() - 2;
+        }
+        List<Polygon> result = new ArrayList<>(vertexCount);
+        Polygon polygonResult;
+        for (Polygon polygon: polygons) {
+            for (int vertex = 1; vertex < polygon.getVertexIndices().size() - 1; vertex++) {
+                polygonResult = new Polygon();
+                ArrayList<Integer> vertexIndices = (ArrayList<Integer>) getVertexes(
+                        polygon.getVertexIndices(),
+                        0, vertex, vertex + 1);
+                polygonResult.setVertexIndices(vertexIndices);
                 if (!polygon.getTextureVertexIndices().isEmpty()) {
-                    ArrayList<Integer> textureVertexIndices = new ArrayList<>(Arrays.asList(
-                            polygon.getTextureVertexIndices().get(0),
-                            polygon.getTextureVertexIndices().get(shift),
-                            polygon.getTextureVertexIndices().get(shift + 1)
-                    ));
-                    polygonNew.setTextureVertexIndices(textureVertexIndices);
+                    ArrayList<Integer> textureVertexIndices = (ArrayList<Integer>) getVertexes(
+                            polygon.getTextureVertexIndices(),
+                            0, vertex, vertex + 1);
+                    polygonResult.setTextureVertexIndices(textureVertexIndices);
                 }
                 if (!polygon.getNormalIndices().isEmpty()) {
-                    ArrayList<Integer> normalIndices = new ArrayList<>(Arrays.asList(
-                            polygon.getNormalIndices().get(0),
-                            polygon.getNormalIndices().get(shift),
-                            polygon.getNormalIndices().get(shift + 1)
-                    ));
-                    polygonNew.setNormalIndices(normalIndices);
+                    ArrayList<Integer> normalIndices = (ArrayList<Integer>) getVertexes(
+                            polygon.getNormalIndices(),
+                            0, vertex, vertex + 1);
+                    polygonResult.setNormalIndices(normalIndices);
                 }
-                polygonsTriangulation.add(polygonNew);
+                result.add(polygonResult);
             }
         }
-        return polygonsTriangulation;
+        return result;
+    }
+
+    public static List<Integer> getVertexes(List<Integer> vertexes, int v1, int v2, int v3) {
+        return new ArrayList<>(Arrays.asList(
+                vertexes.get(v1),
+                vertexes.get(v2),
+                vertexes.get(v3)
+        ));
     }
 }

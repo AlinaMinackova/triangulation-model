@@ -20,7 +20,7 @@ public class TriangulationTest {
         Polygon polygon = new Polygon();
         polygon.setVertexIndices(new ArrayList<>(Arrays.asList(1, 2, 4, 3)));
         polygons.add(polygon);
-        List<Polygon> polygonsTriangulation = Triangulation.triangulation(polygons);
+        List<Polygon> polygonsTriangulation = Triangulation.triangulate(polygons);
         Assertions.assertEquals(polygonsTriangulation.size(), 2);
     }
 
@@ -30,7 +30,7 @@ public class TriangulationTest {
         Polygon polygon = new Polygon();
         polygon.setVertexIndices(new ArrayList<>(Arrays.asList(1, 2, 4, 3, 5, 6)));
         polygons.add(polygon);
-        List<Polygon> polygonsTriangulation = Triangulation.triangulation(polygons);
+        List<Polygon> polygonsTriangulation = Triangulation.triangulate(polygons);
         Assertions.assertEquals(polygonsTriangulation.size(), 4);
     }
 
@@ -40,7 +40,7 @@ public class TriangulationTest {
         Polygon polygon = new Polygon();
         polygon.setVertexIndices(new ArrayList<>(Arrays.asList(1, 2, 3)));
         polygons.add(polygon);
-        List<Polygon> polygonsTriangulation = Triangulation.triangulation(polygons);
+        List<Polygon> polygonsTriangulation = Triangulation.triangulate(polygons);
         Assertions.assertEquals(polygonsTriangulation.size(), 1);
     }
 }

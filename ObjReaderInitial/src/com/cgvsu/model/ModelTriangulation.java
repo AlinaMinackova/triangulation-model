@@ -15,6 +15,6 @@ public class ModelTriangulation extends Model {
         this.textureVertices = model.textureVertices;
         this.normals = model.normals;
         this.basePolygons = model.polygons;
-        this.polygons = (ArrayList<Polygon>) Triangulation.triangulation(model.polygons);
+        this.polygons = (ArrayList<Polygon>) Triangulation.triangulate(model.polygons);
     }
 }
